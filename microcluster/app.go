@@ -366,3 +366,8 @@ func (m *MicroCluster) SQL(query string) (string, *internalTypes.SQLBatch, error
 
 	return "", batch, err
 }
+
+// Context returns the context the microcluster was started with.
+func (m *MicroCluster) Context() context.Context {
+	return m.ctx
+}
