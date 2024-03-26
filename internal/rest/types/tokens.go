@@ -28,7 +28,10 @@ type Token struct {
 	JoinAddresses []types.AddrPort `json:"join_addresses" yaml:"join_addresses"`
 }
 
-func (t Token) String() (string, error) {
+func (t Token) String(omitTokenName bool) (string, error) {
+	if omitTokenName {
+		t.Name = ""
+	}
 	tokenData, err := json.Marshal(t)
 	if err != nil {
 		return "", err

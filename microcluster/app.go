@@ -46,6 +46,8 @@ type Args struct {
 	ListenPort string
 	Client     *client.Client
 	Proxy      func(*http.Request) (*url.URL, error)
+
+	MustValidateJoinTokenNames bool
 }
 
 // App returns an instance of MicroCluster with a newly initialized filesystem if one does not exist.
@@ -81,6 +83,7 @@ func (m *MicroCluster) Start(apiEndpoints []rest.Endpoint, schemaExtensions map[
 	// Start up a daemon with a basic control socket.
 	defer logger.Info("Daemon stopped")
 	d := daemon.NewDaemon(m.ctx, cluster.GetCallerProject())
+	d.MustValidateJoinTokenNames = m.args.MustValidateJoinTokenNames
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, unix.SIGPWR)

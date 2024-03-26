@@ -62,6 +62,8 @@ type Daemon struct {
 	ShutdownCtx    context.Context    // Cancelled when shutdown starts.
 	ShutdownDoneCh chan error         // Receives the result of the d.Stop() function and tells the daemon to end.
 	ShutdownCancel context.CancelFunc // Cancels the shutdownCtx to indicate shutdown starting.
+
+	MustValidateJoinTokenNames bool
 }
 
 // NewDaemon initializes the Daemon context and channels.
@@ -568,6 +570,8 @@ func (d *Daemon) State() *state.State {
 		Remotes:        d.trustStore.Remotes,
 		StartAPI:       d.StartAPI,
 		Stop:           d.Stop,
+
+		MustValidateJoinTokenNames: d.MustValidateJoinTokenNames,
 	}
 
 	return state

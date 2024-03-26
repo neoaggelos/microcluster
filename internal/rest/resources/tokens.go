@@ -74,7 +74,7 @@ func tokensPost(state *state.State, r *http.Request) response.Response {
 		JoinAddresses: joinAddresses,
 	}
 
-	tokenString, err := token.String()
+	tokenString, err := token.String(state.MustValidateJoinTokenNames)
 	if err != nil {
 		return response.InternalError(err)
 	}
@@ -111,7 +111,7 @@ func tokensGet(state *state.State, r *http.Request) response.Response {
 
 		records = make([]internalTypes.TokenRecord, 0, len(tokens))
 		for _, token := range tokens {
-			apiToken, err := token.ToAPI(clusterCert, joinAddresses)
+			apiToken, err := token.ToAPI(clusterCert, joinAddresses, state.MustValidateJoinTokenNames)
 			if err != nil {
 				return err
 			}

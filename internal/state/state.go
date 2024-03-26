@@ -57,6 +57,9 @@ type State struct {
 
 	// Stop fully stops the daemon, its database, and all listeners.
 	Stop func() error
+
+	// MustValidateJoinTokenNames is used to validate node names on join requests.
+	MustValidateJoinTokenNames bool
 }
 
 // StopListeners stops the network listeners and the fsnotify listener.

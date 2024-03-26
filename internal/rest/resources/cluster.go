@@ -144,6 +144,10 @@ func clusterPost(s *state.State, r *http.Request) response.Response {
 			return err
 		}
 
+		if s.MustValidateJoinTokenNames && record.Name != req.Name {
+			return fmt.Errorf("name of joining node does not match token")
+		}
+
 		_, err = cluster.CreateInternalClusterMember(ctx, tx, dbClusterMember)
 		if err != nil {
 			return err
